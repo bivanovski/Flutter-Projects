@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,71 +11,94 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: EmojiSwapper(),
+      title: 'Emoji Swapper',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(),
     );
   }
 }
 
-class EmojiSwapper extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({super.key});
+
   @override
-  _EmojiSwapperState createState() => _EmojiSwapperState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _EmojiSwapperState extends State<EmojiSwapper> {
-  bool swapped = false;
-  final emoji1Key = UniqueKey();
-  final emoji2Key = UniqueKey();
+class _MyHomePageState extends State<MyHomePage> {
+  List<Widget> emojis = [
+    Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(key: UniqueKey(), child: GetEmoji(emoji: "😎")),
+    ),
+    Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(key: UniqueKey(), child: GetEmoji(emoji: "🤠")),
+    ),
+  ];
+
+
+  swapEmoji() {
+    setState(() {
+      emojis.insert(1, emojis.removeAt(0));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Emoji Swapper'),
-      ),
-      body: Center(
+      body: SizedBox.expand(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: swapped
-                  ? [
-                _buildEmojiContainer('😀', emoji2Key),
-                _buildEmojiContainer('😎', emoji1Key),
-              ]
-                  : [
-                _buildEmojiContainer('😀', emoji1Key),
-                _buildEmojiContainer('😎', emoji2Key),
-              ],
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: emojis,
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  swapped = !swapped;
-                });
-              },
-              child: Text('Swap Emojis'),
+            const SizedBox(
+              height: 50,
             ),
+            ElevatedButton(onPressed: swapEmoji, child: const Text('Swap'))
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildEmojiContainer(String emoji, Key key) {
+
+class GetEmoji extends StatefulWidget {
+  String emoji;
+  GetEmoji({super.key, required this.emoji});
+
+  @override
+  State<GetEmoji> createState() => _GetEmojiState();
+}
+
+class _GetEmojiState extends State<GetEmoji> {
+  late String emoji;
+
+  @override
+  void initState() {
+    super.initState();
+    emoji = widget.emoji;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      key: key,
-      margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-        borderRadius: BorderRadius.circular(10),
-      ),
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
       child: Text(
         emoji,
-        style: TextStyle(fontSize: 50),
+        style: TextStyle(fontSize: 100),
       ),
     );
   }
 }
+
+
+
