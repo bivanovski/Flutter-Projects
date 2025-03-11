@@ -29,19 +29,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text('Home Page', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.blue,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Demo counter: $_counter',
+              'Counter: $_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(
               onPressed: _resetCounter,
-              child: const Text('Reset Count'),
+              child: const Text('Reset Count', style: TextStyle(color: Colors.white)),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
             ),
             ElevatedButton(
               onPressed: () {
@@ -50,7 +52,8 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => const ExamplePage()),
                 );
               },
-              child: const Text('Navigate to New Route'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+              child: const Text('Navigate to New Route', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -58,7 +61,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white,),
+        backgroundColor: Colors.blue,
+        shape: CircleBorder(),
       ),
     );
   }

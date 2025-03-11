@@ -7,7 +7,8 @@ class ExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Example Page'),
+        title: const Text('Example Page', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.blue,
       ),
       body: const Center(
         child: Text('This is an empty example page.'),
